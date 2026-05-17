@@ -1,8 +1,29 @@
 import { NestFactory } from '@nestjs/core';
+import { MicroserviceOptions, Transport } from '@nestjs/microservices';
 import { PaymentServiceModule } from './payment-service.module';
+import { GlobalExceptionFilter, LoggingInterceptor } from '@omni/common';
 
-async function bootstrap() {
+async function bootstrap(): Promise<void> {
   const app = await NestFactory.create(PaymentServiceModule);
-  await app.listen(process.env.port ?? 3000);
+
+  app.connectMicroservice<MicroserviceOptions>({
+    transport: Transport.KAFKA,
+    options: {
+      client: {
+        clientId: 'payment-service-consumer',
+        brokers: [process.env['KAFKA_BROKER'] ?? 'localhost:9092'],
+      },
+      consumer: { groupId: 'payment-service-consumer' },
+    },
+  });
+
+  app.useGlobalFilters(new GlobalExceptionFilter());
+  app.useGlobalInterceptors(new LoggingInterceptor());
+
+  await app.startAllMicroservices();
+
+  const port = process.env['PORT'] ?? 3003;
+  await app.listen(port);
 }
+
 bootstrap();
