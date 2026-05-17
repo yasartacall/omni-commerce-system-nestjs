@@ -59,7 +59,11 @@ export class ProductsService {
       throw new NotFoundException(`Product ${id} not found`);
     }
 
-    await this.redis.setex(cacheKey, CACHE_TTL.PRODUCT, JSON.stringify(product));
+    await this.redis.setex(
+      cacheKey,
+      CACHE_TTL.PRODUCT,
+      JSON.stringify(product),
+    );
     return product;
   }
 

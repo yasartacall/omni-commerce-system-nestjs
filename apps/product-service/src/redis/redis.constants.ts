@@ -1,7 +1,7 @@
 export const REDIS_CLIENT = 'REDIS_CLIENT';
 
 export const CACHE_TTL = {
-  PRODUCT: 600,      // 10 dakika
+  PRODUCT: 600, // 10 dakika
   PRODUCT_LIST: 300, // 5 dakika
 } as const;
 
