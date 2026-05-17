@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
-import { CommonService } from './common.service';
+import { RolesGuard } from './guards/roles.guard';
 
 @Module({
-  providers: [CommonService],
-  exports: [CommonService],
+  providers: [RolesGuard],
+  exports: [RolesGuard],
 })
 export class CommonModule {}

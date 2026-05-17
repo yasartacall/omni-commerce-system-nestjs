@@ -1,10 +1,8 @@
 {
   "compilerOptions": {
-    "module": "nodenext",
-    "moduleResolution": "nodenext",
-    "resolvePackageJsonExports": true,
+    "module": "commonjs",
+    "moduleResolution": "node10",
     "esModuleInterop": true,
-    "isolatedModules": true,
     "declaration": true,
     "removeComments": true,
     "emitDecoratorMetadata": true,
@@ -22,24 +20,12 @@
     "strictBindCallApply": true,
     "noFallthroughCasesInSwitch": true,
     "paths": {
-      "@omni/common": [
-        "libs/common/src"
-      ],
-      "@omni/common/*": [
-        "libs/common/src/*"
-      ],
-      "@omni/database": [
-        "libs/database/src"
-      ],
-      "@omni/database/*": [
-        "libs/database/src/*"
-      ],
-      "@omni/kafka": [
-        "libs/kafka/src"
-      ],
-      "@omni/kafka/*": [
-        "libs/kafka/src/*"
-      ]
+      "@omni/common": ["libs/common/src"],
+      "@omni/common/*": ["libs/common/src/*"],
+      "@omni/database": ["libs/database/src"],
+      "@omni/database/*": ["libs/database/src/*"],
+      "@omni/kafka": ["libs/kafka/src"],
+      "@omni/kafka/*": ["libs/kafka/src/*"]
     }
   }
 }
