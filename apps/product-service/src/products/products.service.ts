@@ -33,7 +33,6 @@ export class ProductsService {
     }
 
     const products = await this.productRepo.find({
-      relations: ['category'],
       order: { createdAt: 'DESC' },
     });
 
@@ -55,7 +54,6 @@ export class ProductsService {
 
     const product = await this.productRepo.findOne({
       where: { id },
-      relations: ['category'],
     });
     if (!product) {
       throw new NotFoundException(`Product ${id} not found`);

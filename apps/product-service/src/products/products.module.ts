@@ -5,12 +5,11 @@ import { ProductsController } from './products.controller';
 import { ProductsService } from './products.service';
 import { ProductEventsConsumer } from './product-events.consumer';
 import { Product } from './entities/product.entity';
-import { Category } from './entities/category.entity';
 import { RedisModule } from '../redis/redis.module';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Product, Category]),
+    TypeOrmModule.forFeature([Product]),
     RedisModule,
     KafkaClientModule.register({
       clientId: 'product-service-producer',

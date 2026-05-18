@@ -1,6 +1,5 @@
-import { Column, Entity, Index, JoinColumn, ManyToOne } from 'typeorm';
+import { Column, Entity, Index } from 'typeorm';
 import { BaseEntity } from '@omni/database';
-import { Category } from './category.entity';
 
 @Entity('products')
 export class Product extends BaseEntity {
@@ -16,14 +15,4 @@ export class Product extends BaseEntity {
 
   @Column({ name: 'stock_quantity', default: 0 })
   stockQuantity!: number;
-
-  @Column({ name: 'category_id', nullable: true })
-  categoryId!: string | null;
-
-  @ManyToOne(() => Category, (category) => category.products, {
-    nullable: true,
-    eager: false,
-  })
-  @JoinColumn({ name: 'category_id' })
-  category!: Category | null;
 }
