@@ -20,6 +20,8 @@ async function bootstrap(): Promise<void> {
   app.useGlobalFilters(new GlobalExceptionFilter());
   app.useGlobalInterceptors(new LoggingInterceptor());
 
+  app.setGlobalPrefix('api');
+
   await app.startAllMicroservices();
 
   const port = process.env['PORT'] ?? 3003;
