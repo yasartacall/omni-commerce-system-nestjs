@@ -11,10 +11,12 @@ import {
   Post,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import {
+  CreateProductDto,
+  UpdateProductDto,
+  UpdateStockDto,
+} from '@omni/common';
 import { ProductsService } from './products.service';
-import { CreateProductDto } from './dto/create-product.dto';
-import { UpdateProductDto } from './dto/update-product.dto';
-import { UpdateStockDto } from './dto/update-stock.dto';
 import { Product } from './entities/product.entity';
 
 @ApiTags('Products')
@@ -67,45 +69,6 @@ export class ProductsController {
 
   @ApiOperation({ summary: 'Ürünü sil' })
   @ApiResponse({ status: 204, description: 'Silindi' })
-  @Delete(':id')
-  @HttpCode(HttpStatus.NO_CONTENT)
-  remove(@Param('id', ParseUUIDPipe) id: string): Promise<void> {
-    return this.productsService.remove(id);
-  }
-}
-  constructor(private readonly productsService: ProductsService) {}
-
-  @Post()
-  create(@Body() dto: CreateProductDto): Promise<Product> {
-    return this.productsService.create(dto);
-  }
-
-  @Get()
-  findAll(): Promise<Product[]> {
-    return this.productsService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id', ParseUUIDPipe) id: string): Promise<Product> {
-    return this.productsService.findOne(id);
-  }
-
-  @Patch(':id')
-  update(
-    @Param('id', ParseUUIDPipe) id: string,
-    @Body() dto: UpdateProductDto,
-  ): Promise<Product> {
-    return this.productsService.update(id, dto);
-  }
-
-  @Patch(':id/stock')
-  updateStock(
-    @Param('id', ParseUUIDPipe) id: string,
-    @Body() dto: UpdateStockDto,
-  ): Promise<Product> {
-    return this.productsService.updateStock(id, dto);
-  }
-
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
   remove(@Param('id', ParseUUIDPipe) id: string): Promise<void> {

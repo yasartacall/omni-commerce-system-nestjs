@@ -7,7 +7,7 @@ import { HttpService } from '@nestjs/axios';
 import { isAxiosError } from 'axios';
 import type { AxiosResponse } from 'axios';
 import { firstValueFrom, Observable } from 'rxjs';
-import { CreateOrderDto } from './dto/create-order.dto';
+import { CreateOrderDto } from '@omni/common';
 
 @Injectable()
 export class OrdersService {

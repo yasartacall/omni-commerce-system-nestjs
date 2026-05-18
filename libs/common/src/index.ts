@@ -1,6 +1,7 @@
 export * from './common.module';
 export * from './filters/http-exception.filter';
 export * from './interceptors/logging.interceptor';
+export * from './interceptors/transform.interceptor';
 export * from './decorators/current-user.decorator';
 export * from './decorators/roles.decorator';
 export * from './guards/jwt-auth.guard';
@@ -8,3 +9,7 @@ export * from './guards/roles.guard';
 export * from './interfaces/jwt-payload.interface';
 export * from './interfaces/api-response.interface';
 export * from './interfaces/kafka-events.interface';
+export * from './dto/products/create-product.dto';
+export * from './dto/products/update-product.dto';
+export * from './dto/products/update-stock.dto';
+export * from './dto/orders/create-order.dto';

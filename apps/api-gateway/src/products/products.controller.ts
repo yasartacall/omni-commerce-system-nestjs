@@ -17,11 +17,14 @@ import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import { JwtAuthGuard, RolesGuard } from '@omni/common';
+import {
+  JwtAuthGuard,
+  RolesGuard,
+  CreateProductDto,
+  UpdateProductDto,
+  UpdateStockDto,
+} from '@omni/common';
 import { ProductsService } from './products.service';
-import { CreateProductDto } from './dto/create-product.dto';
-import { UpdateProductDto } from './dto/update-product.dto';
-import { UpdateStockDto } from './dto/update-stock.dto';
 
 @ApiTags('Products')
 @Controller('products')

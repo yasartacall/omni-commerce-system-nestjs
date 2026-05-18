@@ -3,9 +3,11 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Redis } from 'ioredis';
 import { Product } from './entities/product.entity';
-import { CreateProductDto } from './dto/create-product.dto';
-import { UpdateProductDto } from './dto/update-product.dto';
-import { UpdateStockDto } from './dto/update-stock.dto';
+import {
+  CreateProductDto,
+  UpdateProductDto,
+  UpdateStockDto,
+} from '@omni/common';
 import { REDIS_CLIENT, CACHE_TTL, CACHE_KEYS } from '../redis/redis.constants';
 
 @Injectable()

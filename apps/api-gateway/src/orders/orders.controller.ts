@@ -14,9 +14,8 @@ import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import { JwtAuthGuard } from '@omni/common';
+import { JwtAuthGuard, CreateOrderDto } from '@omni/common';
 import { OrdersService } from './orders.service';
-import { CreateOrderDto } from './dto/create-order.dto';
 
 @ApiTags('Orders')
 @ApiBearerAuth('JWT')

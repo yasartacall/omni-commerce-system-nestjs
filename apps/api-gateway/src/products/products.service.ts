@@ -7,9 +7,11 @@ import { HttpService } from '@nestjs/axios';
 import { isAxiosError } from 'axios';
 import type { AxiosResponse } from 'axios';
 import { firstValueFrom, Observable } from 'rxjs';
-import { CreateProductDto } from './dto/create-product.dto';
-import { UpdateProductDto } from './dto/update-product.dto';
-import { UpdateStockDto } from './dto/update-stock.dto';
+import {
+  CreateProductDto,
+  UpdateProductDto,
+  UpdateStockDto,
+} from '@omni/common';
 
 @Injectable()
 export class ProductsService {

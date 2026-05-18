@@ -18,11 +18,11 @@ import {
   StockCheckResultEvent,
   StockDeductRequestedEvent,
   StockDeductResultEvent,
+  CreateOrderDto,
 } from '@omni/common';
 import { Order, OrderStatus } from './entities/order.entity';
 import { OrderItem } from './entities/order-item.entity';
 import { SagaState, SagaStep } from './entities/saga-state.entity';
-import { CreateOrderDto } from './dto/create-order.dto';
 
 @Injectable()
 export class OrdersService implements OnModuleInit {
