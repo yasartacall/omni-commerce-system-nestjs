@@ -15,7 +15,7 @@ export class CreateProductDto {
   @MaxLength(255)
   name!: string;
 
-  @ApiPropertyOptional({ example: 'Yüksek performanslı dizizüstü bilgisayar' })
+  @ApiPropertyOptional({ example: 'Yüksek performanslı dizüstü bilgisayar' })
   @IsString()
   @IsOptional()
   description?: string;

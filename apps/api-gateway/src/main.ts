@@ -1,5 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 import { GlobalExceptionFilter, LoggingInterceptor } from '@omni/common';
 
@@ -18,6 +19,21 @@ async function bootstrap(): Promise<void> {
 
   app.useGlobalFilters(new GlobalExceptionFilter());
   app.useGlobalInterceptors(new LoggingInterceptor());
+
+  const swaggerConfig = new DocumentBuilder()
+    .setTitle('Omni Commerce — API Gateway')
+    .setDescription('Kimlik doğrulama ve yetkilendirme servisi')
+    .setVersion('1.0')
+    .addBearerAuth(
+      { type: 'http', scheme: 'bearer', bearerFormat: 'JWT' },
+      'JWT',
+    )
+    .build();
+  SwaggerModule.setup(
+    'api/docs',
+    app,
+    SwaggerModule.createDocument(app, swaggerConfig),
+  );
 
   const port = process.env['PORT'] ?? 3000;
   await app.listen(port);

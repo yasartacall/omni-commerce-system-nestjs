@@ -150,7 +150,7 @@ services:
       - '3000:3000'
     environment:
       PORT: 3000
-      NODE_ENV: production
+      NODE_ENV: development
       JWT_SECRET: ${JWT_SECRET:-change-me-in-production}
       JWT_EXPIRES_IN_SECONDS: 3600
       DB_HOST: postgres-auth
@@ -159,6 +159,8 @@ services:
       DB_PASSWORD: postgres
       DB_NAME: auth_db
       KAFKA_BROKER: kafka:29092
+      PRODUCT_SERVICE_URL: http://product-service:3001/api
+      ORDER_SERVICE_URL: http://order-service:3002/api
     depends_on:
       postgres-auth:
         condition: service_healthy
@@ -176,7 +178,7 @@ services:
       - '3001:3001'
     environment:
       PORT: 3001
-      NODE_ENV: production
+      NODE_ENV: development
       DB_HOST: postgres-product
       DB_PORT: 5432
       DB_USER: postgres
@@ -204,7 +206,7 @@ services:
       - '3002:3002'
     environment:
       PORT: 3002
-      NODE_ENV: production
+      NODE_ENV: development
       DB_HOST: postgres-order
       DB_PORT: 5432
       DB_USER: postgres
@@ -228,7 +230,7 @@ services:
       - '3003:3003'
     environment:
       PORT: 3003
-      NODE_ENV: production
+      NODE_ENV: development
       DB_HOST: postgres-payment
       DB_PORT: 5432
       DB_USER: postgres

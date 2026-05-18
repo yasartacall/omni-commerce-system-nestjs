@@ -2,23 +2,21 @@ import {
   Body,
   Controller,
   Get,
+  Headers,
   Param,
   ParseUUIDPipe,
   Post,
-  Req,
   UseGuards,
 } from '@nestjs/common';
-import { Request } from 'express';
 import {
   ApiBearerAuth,
   ApiOperation,
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import { JwtAuthGuard, JwtPayload } from '@omni/common';
+import { JwtAuthGuard } from '@omni/common';
 import { OrdersService } from './orders.service';
 import { CreateOrderDto } from './dto/create-order.dto';
-import { Order } from './entities/order.entity';
 
 @ApiTags('Orders')
 @ApiBearerAuth('JWT')
@@ -31,28 +29,27 @@ export class OrdersController {
   @ApiResponse({
     status: 201,
     description: 'Sipariş PROCESSING durumunda oluşturuldu',
-    type: Order,
   })
   @Post()
-  create(@Req() req: Request, @Body() dto: CreateOrderDto): Promise<Order> {
-    const user = req.user as JwtPayload;
-    return this.ordersService.create(user.sub, dto);
+  create(@Body() dto: CreateOrderDto, @Headers('authorization') auth: string) {
+    return this.ordersService.create(dto, auth);
   }
 
   @ApiOperation({ summary: 'Kendi siparişlerim' })
-  @ApiResponse({ status: 200, type: [Order] })
+  @ApiResponse({ status: 200, description: 'Sipariş listesi' })
   @Get()
-  findAll(@Req() req: Request): Promise<Order[]> {
-    const user = req.user as JwtPayload;
-    return this.ordersService.findAll(user.sub);
+  findAll(@Headers('authorization') auth: string) {
+    return this.ordersService.findAll(auth);
   }
 
+  @ApiOperation({ summary: 'Sipariş detayı (saga durumunu poll etmek için)' })
+  @ApiResponse({ status: 200, description: 'Sipariş bulundu' })
+  @ApiResponse({ status: 404, description: 'Sipariş bulunamadı' })
   @Get(':id')
   findOne(
     @Param('id', ParseUUIDPipe) id: string,
-    @Req() req: Request,
-  ): Promise<Order> {
-    const user = req.user as JwtPayload;
-    return this.ordersService.findOne(id, user.sub);
+    @Headers('authorization') auth: string,
+  ) {
+    return this.ordersService.findOne(id, auth);
   }
 }

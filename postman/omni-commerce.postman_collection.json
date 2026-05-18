@@ -11,16 +11,6 @@
       "value": "http://localhost:3000/api",
       "type": "string"
     },
-    {
-      "key": "product_base",
-      "value": "http://localhost:3001/api",
-      "type": "string"
-    },
-    {
-      "key": "order_base",
-      "value": "http://localhost:3002/api",
-      "type": "string"
-    },
     { "key": "token", "value": "", "type": "string" },
     { "key": "product_id", "value": "", "type": "string" },
     { "key": "order_id", "value": "", "type": "string" }
@@ -118,8 +108,11 @@
           ],
           "request": {
             "method": "POST",
-            "url": "{{product_base}}/products",
-            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{base_url}}/products",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
             "body": {
               "mode": "raw",
               "raw": "{\n  \"name\": \"Laptop Pro 16\",\n  \"description\": \"High performance laptop\",\n  \"price\": 1299.99,\n  \"stockQuantity\": 100\n}"
@@ -141,7 +134,7 @@
           ],
           "request": {
             "method": "GET",
-            "url": "{{product_base}}/products"
+            "url": "{{base_url}}/products"
           }
         },
         {
@@ -158,15 +151,18 @@
           ],
           "request": {
             "method": "GET",
-            "url": "{{product_base}}/products/{{product_id}}"
+            "url": "{{base_url}}/products/{{product_id}}"
           }
         },
         {
           "name": "Update Product",
           "request": {
             "method": "PATCH",
-            "url": "{{product_base}}/products/{{product_id}}",
-            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{base_url}}/products/{{product_id}}",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
             "body": {
               "mode": "raw",
               "raw": "{\n  \"price\": 1199.99\n}"
@@ -177,8 +173,11 @@
           "name": "Update Stock",
           "request": {
             "method": "PATCH",
-            "url": "{{product_base}}/products/{{product_id}}/stock",
-            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{base_url}}/products/{{product_id}}/stock",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
             "body": {
               "mode": "raw",
               "raw": "{\n  \"stockQuantity\": 50\n}"
@@ -199,7 +198,7 @@
           ],
           "request": {
             "method": "GET",
-            "url": "{{product_base}}/products/not-a-uuid"
+            "url": "{{base_url}}/products/not-a-uuid"
           }
         },
         {
@@ -216,7 +215,8 @@
           ],
           "request": {
             "method": "DELETE",
-            "url": "{{product_base}}/products/{{product_id}}"
+            "url": "{{base_url}}/products/{{product_id}}",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }]
           }
         }
       ]
@@ -241,7 +241,7 @@
           ],
           "request": {
             "method": "POST",
-            "url": "{{order_base}}/orders",
+            "url": "{{base_url}}/orders",
             "header": [
               { "key": "Content-Type", "value": "application/json" },
               { "key": "Authorization", "value": "Bearer {{token}}" }
@@ -266,7 +266,7 @@
           ],
           "request": {
             "method": "GET",
-            "url": "{{order_base}}/orders",
+            "url": "{{base_url}}/orders",
             "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }]
           }
         },
@@ -286,7 +286,7 @@
           ],
           "request": {
             "method": "GET",
-            "url": "{{order_base}}/orders/{{order_id}}",
+            "url": "{{base_url}}/orders/{{order_id}}",
             "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }]
           }
         },
@@ -304,7 +304,7 @@
           ],
           "request": {
             "method": "POST",
-            "url": "{{order_base}}/orders",
+            "url": "{{base_url}}/orders",
             "header": [{ "key": "Content-Type", "value": "application/json" }],
             "body": {
               "mode": "raw",
@@ -334,7 +334,7 @@
           ],
           "request": {
             "method": "GET",
-            "url": "{{product_base}}/products"
+            "url": "{{base_url}}/products"
           }
         }
       ]
