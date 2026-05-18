@@ -13,24 +13,24 @@ import { CreateOrderDto } from '@omni/common';
 export class OrdersService {
   constructor(private readonly http: HttpService) {}
 
-  create(dto: CreateOrderDto, auth: string) {
+  create(dto: CreateOrderDto, userId: string) {
     return this.forward(
       this.http.post<unknown>('/orders', dto, {
-        headers: { Authorization: auth },
+        headers: { 'X-User-Id': userId },
       }),
     );
   }
 
-  findAll(auth: string) {
+  findAll(userId: string) {
     return this.forward(
-      this.http.get<unknown>('/orders', { headers: { Authorization: auth } }),
+      this.http.get<unknown>('/orders', { headers: { 'X-User-Id': userId } }),
     );
   }
 
-  findOne(id: string, auth: string) {
+  findOne(id: string, userId: string) {
     return this.forward(
       this.http.get<unknown>(`/orders/${id}`, {
-        headers: { Authorization: auth },
+        headers: { 'X-User-Id': userId },
       }),
     );
   }

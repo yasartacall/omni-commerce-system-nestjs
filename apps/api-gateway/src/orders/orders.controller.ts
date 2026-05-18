@@ -2,10 +2,10 @@ import {
   Body,
   Controller,
   Get,
-  Headers,
   Param,
   ParseUUIDPipe,
   Post,
+  Req,
   UseGuards,
 } from '@nestjs/common';
 import {
@@ -14,7 +14,8 @@ import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import { JwtAuthGuard, CreateOrderDto } from '@omni/common';
+import { Request } from 'express';
+import { JwtAuthGuard, JwtPayload, CreateOrderDto } from '@omni/common';
 import { OrdersService } from './orders.service';
 
 @ApiTags('Orders')
@@ -30,25 +31,26 @@ export class OrdersController {
     description: 'Sipariş PROCESSING durumunda oluşturuldu',
   })
   @Post()
-  create(@Body() dto: CreateOrderDto, @Headers('authorization') auth: string) {
-    return this.ordersService.create(dto, auth);
+  create(@Body() dto: CreateOrderDto, @Req() req: Request) {
+    const userId = (req.user as JwtPayload).sub;
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+    return this.ordersService.create(dto, userId);
   }
 
   @ApiOperation({ summary: 'Kendi siparişlerim' })
   @ApiResponse({ status: 200, description: 'Sipariş listesi' })
   @Get()
-  findAll(@Headers('authorization') auth: string) {
-    return this.ordersService.findAll(auth);
+  findAll(@Req() req: Request) {
+    const userId = (req.user as JwtPayload).sub;
+    return this.ordersService.findAll(userId);
   }
 
   @ApiOperation({ summary: 'Sipariş detayı (saga durumunu poll etmek için)' })
   @ApiResponse({ status: 200, description: 'Sipariş bulundu' })
   @ApiResponse({ status: 404, description: 'Sipariş bulunamadı' })
   @Get(':id')
-  findOne(
-    @Param('id', ParseUUIDPipe) id: string,
-    @Headers('authorization') auth: string,
-  ) {
-    return this.ordersService.findOne(id, auth);
+  findOne(@Param('id', ParseUUIDPipe) id: string, @Req() req: Request) {
+    const userId = (req.user as JwtPayload).sub;
+    return this.ordersService.findOne(id, userId);
   }
 }
