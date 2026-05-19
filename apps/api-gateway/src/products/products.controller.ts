@@ -19,7 +19,6 @@ import {
 } from '@nestjs/swagger';
 import {
   JwtAuthGuard,
-  RolesGuard,
   CreateProductDto,
   UpdateProductDto,
   UpdateStockDto,
@@ -34,7 +33,7 @@ export class ProductsController {
   @ApiOperation({ summary: 'Yeni ürün oluştur' })
   @ApiResponse({ status: 201, description: 'Ürün oluşturuldu' })
   @ApiBearerAuth('JWT')
-  @UseGuards(JwtAuthGuard, RolesGuard)
+  @UseGuards(JwtAuthGuard)
   @Post()
   create(@Body() dto: CreateProductDto) {
     return this.productsService.create(dto);
@@ -58,7 +57,7 @@ export class ProductsController {
   @ApiOperation({ summary: 'Ürün güncelle' })
   @ApiResponse({ status: 200, description: 'Güncellendi' })
   @ApiBearerAuth('JWT')
-  @UseGuards(JwtAuthGuard, RolesGuard)
+  @UseGuards(JwtAuthGuard)
   @Patch(':id')
   update(
     @Param('id', ParseUUIDPipe) id: string,
@@ -70,7 +69,7 @@ export class ProductsController {
   @ApiOperation({ summary: 'Stok miktarını güncelle' })
   @ApiResponse({ status: 200, description: 'Stok güncellendi' })
   @ApiBearerAuth('JWT')
-  @UseGuards(JwtAuthGuard, RolesGuard)
+  @UseGuards(JwtAuthGuard)
   @Patch(':id/stock')
   updateStock(
     @Param('id', ParseUUIDPipe) id: string,
@@ -82,7 +81,7 @@ export class ProductsController {
   @ApiOperation({ summary: 'Ürünü sil' })
   @ApiResponse({ status: 204, description: 'Silindi' })
   @ApiBearerAuth('JWT')
-  @UseGuards(JwtAuthGuard, RolesGuard)
+  @UseGuards(JwtAuthGuard)
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
   remove(@Param('id', ParseUUIDPipe) id: string) {
