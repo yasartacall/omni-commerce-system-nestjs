@@ -46,7 +46,12 @@ export class PaymentsService implements OnModuleInit {
     const delay = 100 + Math.random() * 200;
     await new Promise<void>((resolve) => setTimeout(resolve, delay));
 
-    if (Math.random() < 0.1) {
+    const failRate =
+      _userId === '__force_fail__' ? 1.0
+      : _userId === '__force_fail_deduct__' ? 0.0
+      : 0.1;
+
+    if (Math.random() < failRate) {
       throw new Error('Payment gateway timeout');
     }
 

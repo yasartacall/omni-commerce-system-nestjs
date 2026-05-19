@@ -25,6 +25,7 @@ export interface PaymentResultEvent {
 export interface StockDeductRequestedEvent {
   orderId: string;
   items: Array<{ productId: string; quantity: number }>;
+  forceFail?: boolean;
 }
 
 export interface StockDeductResultEvent {

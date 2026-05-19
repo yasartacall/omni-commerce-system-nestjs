@@ -132,11 +132,12 @@ curl -X POST http://localhost:3000/api/auth/login \
 
 ### Orders
 
-| Method | Path            | Auth | Açıklama                        |
-| ------ | --------------- | ---- | ------------------------------- |
-| POST   | /api/orders     | JWT  | Sipariş oluştur (Saga başlatır) |
-| GET    | /api/orders     | JWT  | Kendi siparişlerini listele     |
-| GET    | /api/orders/:id | JWT  | Sipariş + Saga durumu           |
+| Method | Path                        | Auth | Açıklama                                                                                       |
+| ------ | --------------------------- | ---- | ---------------------------------------------------------------------------------------------- |
+| POST   | /api/orders                 | JWT  | Sipariş oluştur (Saga başlatır)                                                                |
+| GET    | /api/orders                 | JWT  | Kendi siparişlerini listele                                                                    |
+| GET    | /api/orders/:id             | JWT  | Sipariş + Saga durumu                                                                          |
+| POST   | /api/orders/demo/force-fail | JWT  | **Saga Compensation Demo** — ödeme geçer, stok düşümü hata verir → ödeme iade → sipariş FAILED |
 
 ---
 

@@ -311,6 +311,35 @@
               "raw": "{\n  \"items\": [{ \"productId\": \"{{product_id}}\", \"quantity\": 1, \"unitPrice\": 100 }]\n}"
             }
           }
+        },
+        {
+          "name": "Demo: Saga Compensation (force-fail deduct)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status 201', () => pm.response.to.have.status(201));",
+                  "const body = pm.response.json();",
+                  "pm.collectionVariables.set('order_id', body.id);",
+                  "console.log('Demo order ID:', body.id, '— poll GET /orders/:id until status = FAILED');"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/orders/demo/force-fail",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"items\": [\n    {\n      \"productId\": \"{{product_id}}\",\n      \"quantity\": 1,\n      \"unitPrice\": 99.99\n    }\n  ]\n}"
+            },
+            "description": "Saga compensation demo: ödeme BAŞARILI → stok düşümü BAŞARISIZ → payment.refund.requested → ödeme REFUNDED → sipariş FAILED.\nOrder ID otomatik olarak {{order_id}} değişkenine kaydedilir. Sonucu görmek için 'Get Order by ID' isteğini çalıştırın."
+          }
         }
       ]
     },

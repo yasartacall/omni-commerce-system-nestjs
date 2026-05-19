@@ -154,6 +154,7 @@ export class OrdersService implements OnModuleInit {
           productId: i.productId,
           quantity: i.quantity,
         })),
+        forceFail: order.userId === '__force_fail_deduct__',
       };
       this.kafkaClient.emit(
         KAFKA_TOPICS.ORDER_STOCK_DEDUCT_REQUESTED,
