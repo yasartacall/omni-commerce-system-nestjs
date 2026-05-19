@@ -1,4 +1,4 @@
-import { Column, Entity, OneToMany } from 'typeorm';
+import { Column, Entity, Index, OneToMany } from 'typeorm';
 import { BaseEntity } from '@omni/database';
 import { OrderItem } from './order-item.entity';
 
@@ -11,12 +11,16 @@ export enum OrderStatus {
 
 @Entity('orders')
 export class Order extends BaseEntity {
+  // Cross-service reference (auth_db) — no physical FK, explicit index for query performance
+  @Index()
   @Column()
   userId!: string;
 
   @Column({ type: 'decimal', precision: 10, scale: 2 })
   totalAmount!: number;
 
+  // Indexed for status-based filtering (e.g. GET /orders?status=PENDING)
+  @Index()
   @Column({ type: 'varchar', length: 20, default: OrderStatus.PENDING })
   status!: OrderStatus;
 
