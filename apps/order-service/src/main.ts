@@ -1,12 +1,16 @@
+import './tracing';
 import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { WinstonModule } from 'nest-winston';
 import { OrderServiceModule } from './order-service.module';
-import { GlobalExceptionFilter, LoggingInterceptor } from '@omni/common';
+import { GlobalExceptionFilter, LoggingInterceptor, createWinstonOptions } from '@omni/common';
 
 async function bootstrap(): Promise<void> {
-  const app = await NestFactory.create(OrderServiceModule);
+  const app = await NestFactory.create(OrderServiceModule, {
+    logger: WinstonModule.createLogger(createWinstonOptions('order-service')),
+  });
 
   app.connectMicroservice<MicroserviceOptions>({
     transport: Transport.KAFKA,

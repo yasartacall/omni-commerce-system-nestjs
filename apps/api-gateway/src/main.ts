@@ -1,11 +1,15 @@
+import './tracing';
 import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { WinstonModule } from 'nest-winston';
 import { AppModule } from './app.module';
-import { GlobalExceptionFilter, LoggingInterceptor, TransformInterceptor } from '@omni/common';
+import { GlobalExceptionFilter, LoggingInterceptor, TransformInterceptor, createWinstonOptions } from '@omni/common';
 
 async function bootstrap(): Promise<void> {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, {
+    logger: WinstonModule.createLogger(createWinstonOptions('api-gateway')),
+  });
 
   app.setGlobalPrefix('api');
 

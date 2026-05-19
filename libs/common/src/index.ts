@@ -1,4 +1,5 @@
 export * from './common.module';
+export * from './logger/winston.logger';
 export * from './filters/http-exception.filter';
 export * from './interceptors/logging.interceptor';
 export * from './interceptors/transform.interceptor';
