@@ -154,7 +154,7 @@ http://localhost:3000/api/docs
 | Araç       | URL                    | Kullanıcı/Şifre |
 | ---------- | ---------------------- | --------------- |
 | Prometheus | http://localhost:9090  | —               |
-| Grafana    | http://localhost:3030  | admin / admin   |
+| Grafana    | http://localhost:3100  | admin / admin   |
 | Jaeger     | http://localhost:16686 | —               |
 | Kibana     | http://localhost:5601  | —               |
 
